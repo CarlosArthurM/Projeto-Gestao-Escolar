@@ -1,0 +1,6 @@
+2025/05/01-15:41:02.501 34c0 Reusing MANIFEST c:\Users\Arthur\Desktop\BOT\tokens\session-name\Default\Local Storage\leveldb/MANIFEST-000001
+2025/05/01-15:41:02.503 34c0 Recovering log #4
+2025/05/01-15:41:02.503 34c0 Reusing old log c:\Users\Arthur\Desktop\BOT\tokens\session-name\Default\Local Storage\leveldb/000004.log 
+2025/05/01-15:42:02.914 3cfc Level-0 table #7: started
+2025/05/01-15:42:02.925 3cfc Level-0 table #7: 14182 bytes OK
+2025/05/01-15:42:02.929 3cfc Delete type=0 #4
