@@ -118,7 +118,7 @@ def janela_login():
 def sistema():
     main_window = ctk.CTk()
     ctk.set_appearance_mode("light")
-    main_window.geometry("800x600")
+    main_window.geometry("1280x720")
     main_window.title("Sistema Escolar")
     main_window.resizable(False, False)
 
@@ -126,11 +126,69 @@ def sistema():
     menu = ctk.CTkFrame(
         master=main_window, 
         width=250, 
-        height=600,
+        height=720,
         fg_color=COLOR_PRIMARY,
         corner_radius=0
     )
     menu.place(x=0, y=0)
+
+
+    frame_conteudo = ctk.CTkFrame(
+        master=main_window,
+        width=1030,
+        height=720,
+        fg_color="white"
+    )
+    frame_conteudo.place(x=250, y=0,relwidth=1, relheight=1)
+    
+    def limparTela():
+        for widget in frame_conteudo.winfo_children():
+            widget.destroy()
+    
+    def tela_documentos():
+        limparTela()
+        ctk.CTkLabel(master=frame_conteudo, text="Solicitações de Documentos", font=("Arial", 18)).place(x=60,y=10)
+        
+        frame_dados = ctk.CTkFrame(master=frame_conteudo, fg_color="red", width=900, height=500)
+        frame_dados.place(x=40, y=120)
+        # Adicione mais widgets aqui
+
+    def tela_horarios():
+        limparTela()
+        turmas = ["Turma A", "Turma B", "Turma C", "Turma D"]
+
+        ctk.CTkLabel(master=frame_conteudo, text="Horários", font=("Arial", 18)).place(x=60,y=10)
+
+        frame_dados = ctk.CTkFrame(master=frame_conteudo, fg_color="red", width=900, height=500)
+        frame_dados.place(x=40, y=120)
+
+        ctk.CTkComboBox(
+            master=frame_dados,
+            values=turmas,
+            font=("Arial", 12),
+            dropdown_font=("Arial", 12),
+            button_color="#2E4053",
+            width=200,
+            state="readonly"
+        ).place(x=200,y=50)
+
+        ctk.CTkLabel(master=frame_dados, text="Selecione a turma: ", font=("Arial", 18)).place(x=40, y=50)
+        
+        # Adicione mais widgets aqui
+
+    def tela_boletins():
+        limparTela()
+        ctk.CTkLabel(master=frame_conteudo, text="Boletins", font=("Arial", 18)).place(x=60,y=10)
+
+        frame_dados = ctk.CTkFrame(master=frame_conteudo, fg_color="red", width=900, height=500)
+        frame_dados.place(x=40, y=120)
+
+    def tela_cardapio():
+        limparTela()
+        ctk.CTkLabel(master=frame_conteudo, text="Cardápio da Semana", font=("Arial", 18)).place(x=60,y=10)
+
+        frame_dados = ctk.CTkFrame(master=frame_conteudo, fg_color="red", width=900, height=500)
+        frame_dados.place(x=40, y=120)
 
     # Cabeçalho do menu
     label_titulo = ctk.CTkLabel(
@@ -139,7 +197,7 @@ def sistema():
         font=("Arial", 20, "bold"),
         text_color="white"
     )
-    label_titulo.place(x=20, y=40)
+    label_titulo.place(x=25, y=40)
 
     # Botões do menu
     btn_style = {
@@ -149,7 +207,6 @@ def sistema():
         "corner_radius": 0,
         "border_width": 0,
         "font": ("Arial", 14),
-        "anchor": "w",
         "fg_color": COLOR_PRIMARY,
         "hover_color": COLOR_HOVER,
         "text_color": "white"
@@ -157,22 +214,38 @@ def sistema():
 
     btn1 = ctk.CTkButton(
         **btn_style,
-        text="SOLICITAÇÕES DE DOCUMENTOS"
+        text="SOLICITAÇÕES DE DOCUMENTOS",
+        command=tela_documentos
     )
     btn1.place(x=0, y=150)
 
     btn2 = ctk.CTkButton(
         **btn_style,
-        text="HORÁRIOS"
+        text="HORÁRIOS",
+        command=tela_horarios
     )
     btn2.place(x=0, y=195)
 
-    # Botão de sair (destaque diferente)
     btn3 = ctk.CTkButton(
+        **btn_style,
+        text="BOLETINS",
+        command=tela_boletins
+    )
+    btn3.place(x=0, y=240)
+
+    btn4 = ctk.CTkButton(
+        **btn_style,
+        text="CARDAPIO DA SEMANA",
+        command=tela_cardapio
+    )
+    btn4.place(x=0, y=285)
+
+    # Botão de sair 
+    btn5 = ctk.CTkButton(
         master=main_window,
         width=250,
         height=45,
-        text="  SAIR",
+        text="SAIR",
         command=main_window.destroy,
         corner_radius=0,
         border_width=0,
@@ -182,7 +255,10 @@ def sistema():
         text_color="white"
     )
 
-    btn3.place(x=0, y=560)
+    btn5.place(x=0, y=675)
+
+
+
 
     main_window.mainloop()
 
