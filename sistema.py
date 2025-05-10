@@ -5,8 +5,8 @@ from dotenv import load_dotenv
 
 load_dotenv()
 
-user = os.getenv("usuario")
-password = os.getenv("senha")
+user = os.getenv("user")
+password = os.getenv("password")
 
 COLOR_PRIMARY = "#2b2b2b"       # Cor principal (escuro)
 COLOR_SECONDARY = "#3a7ebf"     # Azul principal 
