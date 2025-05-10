@@ -1,5 +1,12 @@
 import customtkinter as ctk
 from tkinter import messagebox
+import os
+from dotenv import load_dotenv
+
+load_dotenv()
+
+user = os.getenv("usuario")
+password = os.getenv("senha")
 
 COLOR_PRIMARY = "#2b2b2b"       # Cor principal (escuro)
 COLOR_SECONDARY = "#3a7ebf"     # Azul principal 
@@ -10,12 +17,12 @@ COLOR_ERROR = "#e74c3c"         # Vermelho para erros
 COLOR_SUCCESS = "#2ecc71"       # Verde para sucesso
 
 def Verificador(input_user, input_senha):
-    user = input_user.get()
+    usuario = input_user.get()
     senha = input_senha.get()
-    if user == "admin" and senha == "1234":
+    if usuario == user and senha == password:
         pagina_login.destroy()
         sistema()
-    elif user == "":
+    elif usuario == "":
         messagebox.showerror("Erro", "Insira o usuário", icon="warning")
     elif senha == "":
         messagebox.showerror("Erro", "Insira a senha", icon="warning")
