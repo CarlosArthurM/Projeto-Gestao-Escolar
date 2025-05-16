@@ -155,24 +155,67 @@ def sistema():
 
     def tela_horarios():
         limparTela()
-        turmas = ["Turma A", "Turma B", "Turma C", "Turma D"]
+        ensinos = ["INFORMÁTICA", "NUTRIÇÃO", "MEIO AMBIENTE", "ADMINISTRAÇÃO", "INTEGRAL"]
+        turmas = ["TURMA A", "TURMA B", "TURMA C", "TURMA D"]
+        turmas_integral = ["TURMA A", "TURMA B", "TURMA C", "TURMA D", "TURMA E", "TURMA F", "TURMA G", "TURMA H"]
+        series = ["1º ANO", "2º ANO", "3º ANO"]
 
         ctk.CTkLabel(master=frame_conteudo, text="Horários", font=("Arial", 18)).place(x=60,y=10)
 
         frame_dados = ctk.CTkFrame(master=frame_conteudo, fg_color="red", width=900, height=500)
         frame_dados.place(x=40, y=120)
 
-        ctk.CTkComboBox(
+        label_ensino = ctk.CTkLabel(master=frame_dados, text="ENSINO:", font=("Arial", 14))
+        label_ensino.place(x=40, y=50)
+
+        selecao_ensino =ctk.CTkComboBox(
+            master=frame_dados,
+            values=ensinos,
+            font=("Arial", 12),
+            dropdown_font=("Arial", 12),
+            button_color="#2E4053",
+            width=140,
+            state="readonly"
+        )
+        selecao_ensino.place(x=100,y=50)
+        selecao_ensino.set(ensinos[0])
+
+        label_turma = ctk.CTkLabel(master=frame_dados, text="TURMA:", font=("Arial", 14))
+        label_turma.place(x=280, y=50)
+
+        selecao_turma = ctk.CTkComboBox(
             master=frame_dados,
             values=turmas,
             font=("Arial", 12),
             dropdown_font=("Arial", 12),
             button_color="#2E4053",
-            width=200,
+            width=140,
             state="readonly"
-        ).place(x=200,y=50)
+        )
+        selecao_turma.place(x=340, y=50)
 
-        ctk.CTkLabel(master=frame_dados, text="Selecione a turma: ", font=("Arial", 18)).place(x=40, y=50)
+        label_serie = ctk.CTkLabel(master=frame_dados, text="SÉRIE:", font=("Arial", 14))
+        label_serie.place(x=520, y=50)
+
+        selecao_serie = ctk.CTkComboBox(
+            master=frame_dados,
+            values=series,
+            font=("Arial", 12),
+            dropdown_font=("Arial", 12),
+            button_color="#2E4053",
+            width=140,
+            state="readonly"
+        )
+        selecao_serie.place(x=570, y=50)
+
+        def mudar_ensino(selecao_ensino):
+            if selecao_ensino == "INTEGRAL":
+                selecao_turma.configure(values=turmas_integral)
+            else:
+                selecao_turma.configure(values=turmas)
+    
+   
+        selecao_ensino.configure(command=mudar_ensino)
         
         # Adicione mais widgets aqui
 
