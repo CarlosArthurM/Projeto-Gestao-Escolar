@@ -160,64 +160,156 @@ def sistema():
         turmas_integral = ["TURMA A", "TURMA B", "TURMA C", "TURMA D", "TURMA E", "TURMA F", "TURMA G", "TURMA H"]
         series = ["1º ANO", "2º ANO", "3º ANO"]
 
-        ctk.CTkLabel(master=frame_conteudo, text="Horários", font=("Arial", 18)).place(x=60,y=10)
+        # Título
+        titulo = ctk.CTkLabel(master=frame_conteudo, text="Horários", font=("Arial", 18, "bold"))
+        titulo.place(x=60, y=10)
 
-        frame_dados = ctk.CTkFrame(master=frame_conteudo, fg_color="red", width=900, height=500)
-        frame_dados.place(x=40, y=120)
+        # Frame para controles
+        frame_controles = ctk.CTkFrame(
+            master=frame_conteudo, 
+            fg_color="white",
+            border_width=1,
+            border_color="#e1e1e1",
+            width=900,
+            height=80
+        )
+        frame_controles.place(x=40, y=50)
 
-        label_ensino = ctk.CTkLabel(master=frame_dados, text="ENSINO:", font=("Arial", 14))
-        label_ensino.place(x=40, y=50)
-
-        selecao_ensino =ctk.CTkComboBox(
-            master=frame_dados,
+        # Controles de seleção 
+        selecao_ensino = ctk.CTkComboBox(
+            master=frame_controles,
             values=ensinos,
             font=("Arial", 12),
-            dropdown_font=("Arial", 12),
-            button_color="#2E4053",
             width=140,
             state="readonly"
         )
-        selecao_ensino.place(x=100,y=50)
         selecao_ensino.set(ensinos[0])
-
-        label_turma = ctk.CTkLabel(master=frame_dados, text="TURMA:", font=("Arial", 14))
-        label_turma.place(x=280, y=50)
+        selecao_ensino.place(x=100, y=25)
 
         selecao_turma = ctk.CTkComboBox(
-            master=frame_dados,
+            master=frame_controles,
             values=turmas,
             font=("Arial", 12),
-            dropdown_font=("Arial", 12),
-            button_color="#2E4053",
             width=140,
             state="readonly"
         )
-        selecao_turma.place(x=340, y=50)
-
-        label_serie = ctk.CTkLabel(master=frame_dados, text="SÉRIE:", font=("Arial", 14))
-        label_serie.place(x=520, y=50)
+        selecao_turma.set(turmas[0])
+        selecao_turma.place(x=340, y=25)
 
         selecao_serie = ctk.CTkComboBox(
-            master=frame_dados,
+            master=frame_controles,
             values=series,
             font=("Arial", 12),
-            dropdown_font=("Arial", 12),
-            button_color="#2E4053",
             width=140,
             state="readonly"
         )
-        selecao_serie.place(x=570, y=50)
+        selecao_serie.set(series[0])
+        selecao_serie.place(x=570, y=25)
 
-        def mudar_ensino(selecao_ensino):
-            if selecao_ensino == "INTEGRAL":
+        # Labels dos controles
+        ctk.CTkLabel(master=frame_controles, text="ENSINO:", font=("Arial", 12)).place(x=40, y=25)
+        ctk.CTkLabel(master=frame_controles, text="TURMA:", font=("Arial", 12)).place(x=280, y=25)
+        ctk.CTkLabel(master=frame_controles, text="SÉRIE:", font=("Arial", 12)).place(x=520, y=25)
+
+        def mudar_ensino(escolha):
+            if escolha == "INTEGRAL":
                 selecao_turma.configure(values=turmas_integral)
+                selecao_turma.set(turmas_integral[0])
             else:
                 selecao_turma.configure(values=turmas)
-    
-   
+                selecao_turma.set(turmas[0])
+
         selecao_ensino.configure(command=mudar_ensino)
-        
-        # Adicione mais widgets aqui
+
+        # Frame para tabela 
+        frame_tabela = ctk.CTkScrollableFrame(
+            master=frame_conteudo,
+            fg_color="white",
+            border_width=1,
+            border_color="#e1e1e1",
+            width=920,
+            height=500
+        )
+        frame_tabela.place(x=40, y=150)
+
+        # Configuração da tabela
+        dias_semana = ["SEGUNDA", "TERÇA", "QUARTA", "QUINTA", "SEXTA"]
+        horarios = ["1º", "2º", "3º", "4º", "5º", "6º"]
+        largura_coluna = 160
+        altura_linha = 80
+
+        # Cabeçalhos das colunas (dias da semana)
+        for col, dia in enumerate(dias_semana):
+            header = ctk.CTkLabel(
+                master=frame_tabela,
+                text=dia,
+                font=("Arial", 12, "bold"),
+                width=largura_coluna-10,
+                height=30,
+                corner_radius=5,
+                fg_color=COLOR_SECONDARY,
+                text_color="white"
+            )
+            header.grid(row=0, column=col+1, padx=5, pady=5)
+
+        # Linhas da tabela (horários)
+        for row, horario in enumerate(horarios, start=1):
+            # Label do horário
+            lbl_horario = ctk.CTkLabel(
+                master=frame_tabela,
+                text=f"{horario}º Horário",
+                font=("Arial", 11),
+                width=100,
+                height=altura_linha-10,
+                corner_radius=5,
+                fg_color=COLOR_ENTRY_BG
+            )
+            lbl_horario.grid(row=row, column=0, padx=5, pady=5)
+
+            # Campos para cada dia
+            for col in range(len(dias_semana)):
+                frame_celula = ctk.CTkFrame(
+                    master=frame_tabela,
+                    width=largura_coluna-10,
+                    height=altura_linha-10,
+                    fg_color="#f8f8f8",
+                    corner_radius=5
+                )
+                frame_celula.grid(row=row, column=col+1, padx=5, pady=5)
+                frame_celula.grid_propagate(False)
+                
+                # Campo matéria
+                entry_materia = ctk.CTkEntry(
+                    master=frame_celula,
+                    placeholder_text="Matéria",
+                    width=largura_coluna-20,
+                    height=25,
+                    font=("Arial", 11)
+                )
+                entry_materia.pack(pady=(10, 5), padx=5)
+                
+                # Campo professor
+                entry_professor = ctk.CTkEntry(
+                    master=frame_celula,
+                    placeholder_text="Professor",
+                    width=largura_coluna-20,
+                    height=25,
+                    font=("Arial", 11)
+                )
+                entry_professor.pack(pady=5, padx=5)
+
+        # Botão para salvar (fora do scrollable frame)
+        btn_salvar = ctk.CTkButton(
+            master=frame_conteudo,
+            text="SALVAR HORÁRIOS",
+            width=150,
+            height=35,
+            fg_color=COLOR_SECONDARY,
+            hover_color=COLOR_HOVER,
+            font=("Arial", 12, "bold"),
+            corner_radius=8
+        )
+        btn_salvar.place(x=790, y=660)
 
     def tela_boletins():
         limparTela()
