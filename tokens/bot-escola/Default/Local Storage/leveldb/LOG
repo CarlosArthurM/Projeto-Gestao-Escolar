@@ -1,3 +1,5 @@
-2025/05/03-17:40:32.714 418 Reusing MANIFEST c:\Users\Arthur\Desktop\BOT\tokens\bot-escola\Default\Local Storage\leveldb/MANIFEST-000001
-2025/05/03-17:40:32.716 418 Recovering log #3
-2025/05/03-17:40:32.716 418 Reusing old log c:\Users\Arthur\Desktop\BOT\tokens\bot-escola\Default\Local Storage\leveldb/000003.log 
+2025/05/22-17:28:12.633 3a68 Reusing MANIFEST c:\Users\Arthur\Desktop\BOT\tokens\bot-escola\Default\Local Storage\leveldb/MANIFEST-000001
+2025/05/22-17:28:12.635 3a68 Recovering log #4
+2025/05/22-17:28:12.635 3a68 Level-0 table #6: started
+2025/05/22-17:28:12.639 3a68 Level-0 table #6: 14945 bytes OK
+2025/05/22-17:28:12.643 3a68 Delete type=0 #4

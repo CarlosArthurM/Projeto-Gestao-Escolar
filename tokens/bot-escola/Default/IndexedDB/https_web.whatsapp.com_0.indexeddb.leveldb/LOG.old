@@ -1,24 +1,24 @@
-2025/05/03-17:36:39.513 27ac Reusing MANIFEST c:\Users\Arthur\Desktop\BOT\tokens\bot-escola\Default\IndexedDB\https_web.whatsapp.com_0.indexeddb.leveldb/MANIFEST-000001
-2025/05/03-17:36:39.520 27ac Recovering log #62
-2025/05/03-17:36:39.532 27ac Reusing old log c:\Users\Arthur\Desktop\BOT\tokens\bot-escola\Default\IndexedDB\https_web.whatsapp.com_0.indexeddb.leveldb/000062.log 
-2025/05/03-17:36:46.871 6d8 Level-0 table #68: started
-2025/05/03-17:36:46.895 6d8 Level-0 table #68: 376648 bytes OK
-2025/05/03-17:36:46.898 6d8 Delete type=0 #62
-2025/05/03-17:36:46.899 27ac Manual compaction at level-0 from '\x00\x1f\x00\x00\x00' @ 72057594037927935 : 1 .. '\x00 \x00\x00\x00' @ 0 : 0; will stop at (end)
-2025/05/03-17:36:46.900 27ac Level-0 table #70: started
-2025/05/03-17:36:46.922 27ac Level-0 table #70: 438 bytes OK
-2025/05/03-17:36:46.924 27ac Delete type=0 #67
-2025/05/03-17:36:46.924 27ac Manual compaction at level-0 from '\x00 \x00\x00\x00' @ 72057594037927935 : 1 .. '\x00!\x00\x00\x00' @ 0 : 0; will stop at '\x00 \x00\x00\x05' @ 130914 : 0
-2025/05/03-17:36:46.924 27ac Compacting 1@0 + 1@1 files
-2025/05/03-17:36:46.939 27ac Generated table #71@0: 8372 keys, 175627 bytes
-2025/05/03-17:36:46.939 27ac Compacted 1@0 + 1@1 files => 175627 bytes
-2025/05/03-17:36:46.942 27ac compacted to: files[ 0 1 1 0 0 0 0 ]
-2025/05/03-17:36:46.942 27ac Delete type=2 #70
-2025/05/03-17:36:46.943 27ac Manual compaction at level-0 from '\x00 \x00\x00\x05' @ 130914 : 0 .. '\x00!\x00\x00\x00' @ 0 : 0; will stop at (end)
-2025/05/03-17:36:47.925 1c54 Compacting 1@1 + 1@2 files
-2025/05/03-17:36:47.979 1c54 Generated table #72@1: 28642 keys, 1054224 bytes
-2025/05/03-17:36:47.979 1c54 Compacted 1@1 + 1@2 files => 1054224 bytes
-2025/05/03-17:36:47.981 1c54 compacted to: files[ 0 0 1 0 0 0 0 ]
-2025/05/03-17:36:47.981 1c54 Delete type=2 #65
-2025/05/03-17:36:47.981 1c54 Delete type=2 #68
-2025/05/03-17:36:47.981 1c54 Delete type=2 #71
+2025/05/22-17:24:25.822 3ed4 Reusing MANIFEST c:\Users\Arthur\Desktop\BOT\tokens\bot-escola\Default\IndexedDB\https_web.whatsapp.com_0.indexeddb.leveldb/MANIFEST-000001
+2025/05/22-17:24:25.823 3ed4 Recovering log #340
+2025/05/22-17:24:25.836 3ed4 Reusing old log c:\Users\Arthur\Desktop\BOT\tokens\bot-escola\Default\IndexedDB\https_web.whatsapp.com_0.indexeddb.leveldb/000340.log 
+2025/05/22-17:24:27.099 3b44 Level-0 table #346: started
+2025/05/22-17:24:27.117 3b44 Level-0 table #346: 353109 bytes OK
+2025/05/22-17:24:27.119 3b44 Delete type=0 #340
+2025/05/22-17:24:27.120 3ed4 Manual compaction at level-0 from '\x00z\x00\x00\x00' @ 72057594037927935 : 1 .. '\x00{\x00\x00\x00' @ 0 : 0; will stop at (end)
+2025/05/22-17:24:27.121 3ed4 Level-0 table #348: started
+2025/05/22-17:24:27.133 3ed4 Level-0 table #348: 437 bytes OK
+2025/05/22-17:24:27.142 3ed4 Delete type=0 #345
+2025/05/22-17:24:27.143 3ed4 Manual compaction at level-0 from '\x00{\x00\x00\x00' @ 72057594037927935 : 1 .. '\x00|\x00\x00\x00' @ 0 : 0; will stop at '\x00{\x00\x00\x05' @ 528110 : 0
+2025/05/22-17:24:27.143 3ed4 Compacting 1@0 + 1@1 files
+2025/05/22-17:24:27.152 3ed4 Generated table #349@0: 7216 keys, 152723 bytes
+2025/05/22-17:24:27.152 3ed4 Compacted 1@0 + 1@1 files => 152723 bytes
+2025/05/22-17:24:27.154 3ed4 compacted to: files[ 0 1 1 0 0 0 0 ]
+2025/05/22-17:24:27.154 3ed4 Delete type=2 #348
+2025/05/22-17:24:27.154 3ed4 Manual compaction at level-0 from '\x00{\x00\x00\x05' @ 528110 : 0 .. '\x00|\x00\x00\x00' @ 0 : 0; will stop at (end)
+2025/05/22-17:24:28.084 3a30 Compacting 1@1 + 1@2 files
+2025/05/22-17:24:28.141 3a30 Generated table #350@1: 44088 keys, 1579961 bytes
+2025/05/22-17:24:28.141 3a30 Compacted 1@1 + 1@2 files => 1579961 bytes
+2025/05/22-17:24:28.146 3a30 compacted to: files[ 0 0 1 0 0 0 0 ]
+2025/05/22-17:24:28.147 3a30 Delete type=2 #343
+2025/05/22-17:24:28.147 3a30 Delete type=2 #346
+2025/05/22-17:24:28.147 3a30 Delete type=2 #349

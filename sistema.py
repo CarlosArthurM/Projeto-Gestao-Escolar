@@ -159,13 +159,18 @@ def sistema():
         turmas = ["TURMA A", "TURMA B", "TURMA C", "TURMA D"]
         turmas_integral = ["TURMA A", "TURMA B", "TURMA C", "TURMA D", "TURMA E", "TURMA F", "TURMA G", "TURMA H"]
         series = ["1º ANO", "2º ANO", "3º ANO"]
+        
+        # horarios
+        horarios_padrao = ["1º", "2º", "3º", "4º", "5º", "6º"]
+        horarios_integral = ["1º", "2º", "3º", "4º", "5º", "6º", "7º", "8º"]
+        horarios_atuais = horarios_padrao
 
         # Título
         titulo = ctk.CTkLabel(master=frame_conteudo, text="Horários", font=("Arial", 18, "bold"))
         titulo.place(x=60, y=10)
 
-        # Frame para controles
-        frame_controles = ctk.CTkFrame(
+        # Frame para os horarios
+        frame_selecoes = ctk.CTkFrame(
             master=frame_conteudo, 
             fg_color="white",
             border_width=1,
@@ -173,11 +178,11 @@ def sistema():
             width=900,
             height=80
         )
-        frame_controles.place(x=40, y=50)
+        frame_selecoes.place(x=40, y=50)
 
-        # Controles de seleção 
+        # seleção ensino
         selecao_ensino = ctk.CTkComboBox(
-            master=frame_controles,
+            master=frame_selecoes,
             values=ensinos,
             font=("Arial", 12),
             width=140,
@@ -186,8 +191,9 @@ def sistema():
         selecao_ensino.set(ensinos[0])
         selecao_ensino.place(x=100, y=25)
 
+        #seleção turma
         selecao_turma = ctk.CTkComboBox(
-            master=frame_controles,
+            master=frame_selecoes,
             values=turmas,
             font=("Arial", 12),
             width=140,
@@ -196,8 +202,9 @@ def sistema():
         selecao_turma.set(turmas[0])
         selecao_turma.place(x=340, y=25)
 
+        #seleção serie
         selecao_serie = ctk.CTkComboBox(
-            master=frame_controles,
+            master=frame_selecoes,
             values=series,
             font=("Arial", 12),
             width=140,
@@ -206,20 +213,10 @@ def sistema():
         selecao_serie.set(series[0])
         selecao_serie.place(x=570, y=25)
 
-        # Labels dos controles
-        ctk.CTkLabel(master=frame_controles, text="ENSINO:", font=("Arial", 12)).place(x=40, y=25)
-        ctk.CTkLabel(master=frame_controles, text="TURMA:", font=("Arial", 12)).place(x=280, y=25)
-        ctk.CTkLabel(master=frame_controles, text="SÉRIE:", font=("Arial", 12)).place(x=520, y=25)
-
-        def mudar_ensino(escolha):
-            if escolha == "INTEGRAL":
-                selecao_turma.configure(values=turmas_integral)
-                selecao_turma.set(turmas_integral[0])
-            else:
-                selecao_turma.configure(values=turmas)
-                selecao_turma.set(turmas[0])
-
-        selecao_ensino.configure(command=mudar_ensino)
+        # Labels das seleções
+        ctk.CTkLabel(master=frame_selecoes, text="ENSINO:", font=("Arial", 12)).place(x=40, y=25)
+        ctk.CTkLabel(master=frame_selecoes, text="TURMA:", font=("Arial", 12)).place(x=280, y=25)
+        ctk.CTkLabel(master=frame_selecoes, text="SÉRIE:", font=("Arial", 12)).place(x=520, y=25)
 
         # Frame para tabela 
         frame_tabela = ctk.CTkScrollableFrame(
@@ -232,73 +229,93 @@ def sistema():
         )
         frame_tabela.place(x=40, y=150)
 
-        # Configuração da tabela
-        dias_semana = ["SEGUNDA", "TERÇA", "QUARTA", "QUINTA", "SEXTA"]
-        horarios = ["1º", "2º", "3º", "4º", "5º", "6º"]
-        largura_coluna = 160
-        altura_linha = 80
+        def criar_tabela(horarios):
+            # Limpa o frame da tabela
+            for widget in frame_tabela.winfo_children():
+                widget.destroy()
+            
+            # Configuração da tabela
+            dias_semana = ["SEGUNDA", "TERÇA", "QUARTA", "QUINTA", "SEXTA"]
+            largura_coluna = 160
+            altura_linha = 80
 
-        # Cabeçalhos das colunas (dias da semana)
-        for col, dia in enumerate(dias_semana):
-            header = ctk.CTkLabel(
-                master=frame_tabela,
-                text=dia,
-                font=("Arial", 12, "bold"),
-                width=largura_coluna-10,
-                height=30,
-                corner_radius=5,
-                fg_color=COLOR_SECONDARY,
-                text_color="white"
-            )
-            header.grid(row=0, column=col+1, padx=5, pady=5)
-
-        # Linhas da tabela (horários)
-        for row, horario in enumerate(horarios, start=1):
-            # Label do horário
-            lbl_horario = ctk.CTkLabel(
-                master=frame_tabela,
-                text=f"{horario}º Horário",
-                font=("Arial", 11),
-                width=100,
-                height=altura_linha-10,
-                corner_radius=5,
-                fg_color=COLOR_ENTRY_BG
-            )
-            lbl_horario.grid(row=row, column=0, padx=5, pady=5)
-
-            # Campos para cada dia
-            for col in range(len(dias_semana)):
-                frame_celula = ctk.CTkFrame(
+            # Cabeçalhos das colunas (dias da semana)
+            for col, dia in enumerate(dias_semana):
+                header = ctk.CTkLabel(
                     master=frame_tabela,
+                    text=dia,
+                    font=("Arial", 12, "bold"),
                     width=largura_coluna-10,
-                    height=altura_linha-10,
-                    fg_color="#f8f8f8",
-                    corner_radius=5
+                    height=30,
+                    corner_radius=5,
+                    fg_color=COLOR_SECONDARY,
+                    text_color="white"
                 )
-                frame_celula.grid(row=row, column=col+1, padx=5, pady=5)
-                frame_celula.grid_propagate(False)
-                
-                # Campo matéria
-                entry_materia = ctk.CTkEntry(
-                    master=frame_celula,
-                    placeholder_text="Matéria",
-                    width=largura_coluna-20,
-                    height=25,
-                    font=("Arial", 11)
-                )
-                entry_materia.pack(pady=(10, 5), padx=5)
-                
-                # Campo professor
-                entry_professor = ctk.CTkEntry(
-                    master=frame_celula,
-                    placeholder_text="Professor",
-                    width=largura_coluna-20,
-                    height=25,
-                    font=("Arial", 11)
-                )
-                entry_professor.pack(pady=5, padx=5)
+                header.grid(row=0, column=col+1, padx=5, pady=5)
 
-        # Botão para salvar (fora do scrollable frame)
+            # Linhas da tabela (horários)
+            for row, horario in enumerate(horarios, start=1):
+                # Label do horário
+                lbl_horario = ctk.CTkLabel(
+                    master=frame_tabela,
+                    text=f"{horario}º Horário",
+                    font=("Arial", 11),
+                    width=100,
+                    height=altura_linha-10,
+                    corner_radius=5,
+                    fg_color=COLOR_ENTRY_BG
+                )
+                lbl_horario.grid(row=row, column=0, padx=5, pady=5)
+
+                # Campos para cada dia
+                for col in range(len(dias_semana)):
+                    frame_celula = ctk.CTkFrame(
+                        master=frame_tabela,
+                        width=largura_coluna-10,
+                        height=altura_linha-10,
+                        fg_color="#f8f8f8",
+                        corner_radius=5
+                    )
+                    frame_celula.grid(row=row, column=col+1, padx=5, pady=5)
+                    frame_celula.grid_propagate(False)
+                    
+                    # Campo matéria
+                    entry_materia = ctk.CTkEntry(
+                        master=frame_celula,
+                        placeholder_text="Matéria",
+                        width=largura_coluna-20,
+                        height=25,
+                        font=("Arial", 11)
+                    )
+                    entry_materia.pack(pady=(10, 5), padx=5)
+                    
+                    # Campo professor
+                    entry_professor = ctk.CTkEntry(
+                        master=frame_celula,
+                        placeholder_text="Professor",
+                        width=largura_coluna-20,
+                        height=25,
+                        font=("Arial", 11)
+                    )
+                    entry_professor.pack(pady=5, padx=5)
+
+        # Criar tabela inicial
+        criar_tabela(horarios_padrao)
+
+        def mudar_ensino(escolha):
+            if escolha == "INTEGRAL":
+                selecao_turma.configure(values=turmas_integral)
+                selecao_turma.set(turmas_integral[0])
+                horarios_atuais = horarios_integral
+            else:
+                selecao_turma.configure(values=turmas)
+                selecao_turma.set(turmas[0])
+                horarios_atuais = horarios_padrao
+            criar_tabela(horarios_atuais)
+
+        selecao_ensino.configure(command=mudar_ensino)
+
+        # Botão para salvar 
         btn_salvar = ctk.CTkButton(
             master=frame_conteudo,
             text="SALVAR HORÁRIOS",

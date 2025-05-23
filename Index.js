@@ -9,41 +9,60 @@ venom.create({ session: 'bot-escola' })
       const telefone = message.from;
       const msg = message.body.toLowerCase();
 
-      // Se tiver dados temporários, está no meio de uma coleta
+      // verifica se tá coletando dado
       if (dadosTemporarios[telefone]) {
-        if (!dadosTemporarios[telefone].serie) {
-          // Guarda a série e pede a turma
-          dadosTemporarios[telefone].serie = message.body;
-          await client.sendText(telefone, 'Agora informe sua turma:');
-          return;
-        } else {
-          // Guarda a turma e processa os dados
-          const turma = message.body;
-          const serie = dadosTemporarios[telefone].serie;
-          
-          // Aqui você pode fazer o que quiser com os dados
-          console.log('Dados coletados:', { telefone, serie, turma });
-          
-          await client.sendText(telefone, `✔️ Anotado!\nSérie: ${serie}\nTurma: ${turma}`);
-          delete dadosTemporarios[telefone]; // Limpa os dados
-          return;
+        // verifica se escolheu opcao doumento
+        if (dadosTemporarios[telefone].opcao === "documento") {
+          // verifica se não coletou o nome ainda
+          if (!dadosTemporarios[telefone].nome) {
+            dadosTemporarios[telefone].nome = message.body;
+            await client.sendText(telefone, "Informe sua data de nascimento");
+            return;
+
+          } else if (!dadosTemporarios[telefone].dataNascimento) {
+            dadosTemporarios[telefone].dataNascimento = message.body;
+            await client.sendText(telefone, "Informe o documento que deseja pedir");
+            return;
+
+          } else {
+            dadosTemporarios[telefone].tipoDoc = message.body;
+            console.log(dadosTemporarios[telefone]);
+            await client.sendText(telefone, "Documento solicitado com sucesso!");
+            delete dadosTemporarios[telefone];
+            return;
+          }
+        }
+        
+        if (dadosTemporarios[telefone].opcao === "horario") {
+          if (!dadosTemporarios[telefone].turma) {
+            dadosTemporarios[telefone].turma = message.body;
+            await client.sendText(telefone, "Informe sua série");
+            return;
+            
+          } else {
+            dadosTemporarios[telefone].serie = message.body;
+            console.log(dadosTemporarios[telefone]);
+            await client.sendText(telefone, "Horário solicitado com sucesso!");
+            delete dadosTemporarios[telefone];
+            return;
+          }
         }
       }
 
       // Menu principal com switch
       switch(msg) {
-
         case 'menu':
-          await client.sendText(telefone, '📋 MENU:\n1. Documentos\n2. Horários');
+          await client.sendText(telefone, '📋 MENU:\n1. Solicitar Documento\n2. Solicitar Horários\n3. Solicitar Cardápio');
           break;
 
         case '1':
-          await client.sendText(telefone, 'Preencha o formulario: ');
+          dadosTemporarios[telefone] = { opcao: "documento" };
+          await client.sendText(telefone, "Informe seu nome completo");
           break;
 
         case '2':
-          dadosTemporarios[telefone] = {}; // Prepara para coletar dados
-          await client.sendText(telefone, 'Para ver horários, informe sua série:');
+          dadosTemporarios[telefone] = { opcao: "horario" };
+          await client.sendText(telefone, "Informe sua turma");
           break;
 
         default:
