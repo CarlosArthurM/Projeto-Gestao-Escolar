@@ -64,6 +64,10 @@ venom.create({ session: 'bot-escola' })
           dadosTemporarios[telefone] = { opcao: "horario" };
           await client.sendText(telefone, "Informe sua turma");
           break;
+        
+        case '3':
+          //enviar o cardapio usando json e banco de dados
+          break;
 
         default:
           await client.sendText(telefone, `Olá, eu sou o bot da Escola e estou aqui para te ajudar, digite "menu" para ver as opções.`);

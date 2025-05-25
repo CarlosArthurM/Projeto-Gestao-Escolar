@@ -147,10 +147,18 @@ def sistema():
     
     def tela_documentos():
         limparTela()
-        ctk.CTkLabel(master=frame_conteudo, text="Solicitações de Documentos", font=("Arial", 18)).place(x=60,y=10)
+        titulo = ctk.CTkLabel(master=frame_conteudo, text="SOLICITAÇÕES DE DOCUMENTO", font=("Arial", 20, "bold"))
+        titulo.place(x=60, y=10)
         
-        frame_dados = ctk.CTkFrame(master=frame_conteudo, fg_color="red", width=900, height=500)
-        frame_dados.place(x=40, y=120)
+        frame_pedidos = ctk.CTkFrame(
+            master=frame_conteudo,
+            fg_color="white",
+            border_width=1,
+            border_color="#e1e1e1",
+            width=920,
+            height=500
+        )
+        frame_pedidos.place(x=40, y=150)
         # Adicione mais widgets aqui
 
     def tela_horarios():
@@ -166,7 +174,7 @@ def sistema():
         horarios_atuais = horarios_padrao
 
         # Título
-        titulo = ctk.CTkLabel(master=frame_conteudo, text="Horários", font=("Arial", 18, "bold"))
+        titulo = ctk.CTkLabel(master=frame_conteudo, text="HORÁRIOS", font=("Arial", 20, "bold"))
         titulo.place(x=60, y=10)
 
         # Frame para os horarios
@@ -330,17 +338,240 @@ def sistema():
 
     def tela_boletins():
         limparTela()
-        ctk.CTkLabel(master=frame_conteudo, text="Boletins", font=("Arial", 18)).place(x=60,y=10)
+        
+        # Cursos
+        ensinos = ["INFORMÁTICA", "NUTRIÇÃO", "ADMINISTRAÇÃO", "INTEGRAL"]
+        
+        # Turmas 
+        turmas = ["TURMA A", "TURMA B", "TURMA C", "TURMA D"]
+        turmas_integral = turmas + ["TURMA E", "TURMA F", "TURMA G", "TURMA H"]
+        
+        # Matérias por curso 
+        materias_info = ["PROGRAMAÇÃO", "REDES", "BANCO DE DADOS", "MATEMÁTICA", "PORTUGUÊS"]
+        materias_nutri = ["NUTRIÇÃO BÁSICA", "DIETÉTICA", "MICROBIOLOGIA", "PORTUGUÊS"]
+        materias_adm = ["CONTABILIDADE", "GESTÃO", "MAT. FINANCEIRA", "PORTUGUÊS"]
+        materias_integral = ["PORTUGUÊS", "MATEMÁTICA", "CIÊNCIAS", "HISTÓRIA", "GEOGRAFIA"]
+        
+        series = ["1º ANO", "2º ANO", "3º ANO"]
+        
+        # Variável para controlar as matérias atuais
+        materias_atuais = materias_info  
 
-        frame_dados = ctk.CTkFrame(master=frame_conteudo, fg_color="red", width=900, height=500)
-        frame_dados.place(x=40, y=120)
+        
+        # Título 
+        titulo = ctk.CTkLabel(
+            master=frame_conteudo, 
+            text="BOLETIM ESCOLAR", 
+            font=("Arial", 20, "bold")
+        )
+        titulo.place(x=60, y=10)
+        
+        # Frame de seleções 
+        frame_selecoes = ctk.CTkFrame(
+            master=frame_conteudo, 
+            fg_color="white",
+            border_width=1,
+            border_color="#e1e1e1",
+            width=900,
+            height=120,
+            corner_radius=10
+        )
+        frame_selecoes.place(x=40, y=60)
+        
+        # Campo Nome do Aluno 
+        ctk.CTkLabel(
+            master=frame_selecoes, 
+            text="NOME DO ALUNO:", 
+            font=("Arial", 12, "bold")
+        ).place(x=30, y=20)
+        
+        entry_nome = ctk.CTkEntry(
+            master=frame_selecoes,
+            width=300,
+            height=35,
+            font=("Arial", 12),
+            placeholder_text="Digite o nome completo"
+        )
+        entry_nome.place(x=30, y=45)
+        
+        ctk.CTkLabel(
+            master=frame_selecoes, 
+            text="CURSO:", 
+            font=("Arial", 12, "bold")
+        ).place(x=350, y=20)
+        
+        selecao_ensino = ctk.CTkComboBox(
+            master=frame_selecoes,
+            values=ensinos,
+            font=("Arial", 12),
+            width=180,
+            state="readonly",
+            dropdown_font=("Arial", 12)
+        )
+        selecao_ensino.place(x=350, y=45)
+        selecao_ensino.set(ensinos[0])
+        
+        ctk.CTkLabel(
+            master=frame_selecoes, 
+            text="TURMA:", 
+            font=("Arial", 12, "bold")
+        ).place(x=550, y=20)
+        
+        selecao_turma = ctk.CTkComboBox(
+            master=frame_selecoes,
+            values=turmas,
+            font=("Arial", 12),
+            width=120,
+            state="readonly"
+        )
+        selecao_turma.place(x=550, y=45)
+        selecao_turma.set(turmas[0])
+        
+        ctk.CTkLabel(
+            master=frame_selecoes, 
+            text="SÉRIE:", 
+            font=("Arial", 12, "bold")
+        ).place(x=700, y=20)
+        
+        selecao_serie = ctk.CTkComboBox(
+            master=frame_selecoes,
+            values=series,
+            font=("Arial", 12),
+            width=120,
+            state="readonly"
+        )
+        selecao_serie.place(x=700, y=45)
+        selecao_serie.set(series[0])
+        
+        # Frame da tabela 
+        frame_tabela = ctk.CTkScrollableFrame(
+            master=frame_conteudo,
+            fg_color="white",
+            border_width=1,
+            border_color="#e1e1e1",
+            width=900,
+            height=450,
+            corner_radius=10
+        )
+        frame_tabela.place(x=40, y=200)
+        
+        
+        def criar_tabela():
+            for widget in frame_tabela.winfo_children():
+                widget.destroy()
+            
+            unidades = ["1º UNIDADE", "2º UNIDADE", "3º UNIDADE"]
+            
+            # Cabeçalho 
+            for col, unidade in enumerate(unidades):
+                header = ctk.CTkLabel(
+                    master=frame_tabela,
+                    text=unidade,
+                    font=("Arial", 12, "bold"),
+                    width=200,
+                    height=40,
+                    corner_radius=5,
+                    fg_color=COLOR_SECONDARY,
+                    text_color="white"
+                )
+                header.grid(row=0, column=col+1, padx=5, pady=5, sticky="nsew")
+            
+            # Matérias 
+            for row, materia in enumerate(materias_atuais, start=1):
+                bg_color = "#ecf0f1" if row % 2 == 0 else "#ffffff"
+                
+                # Nome da matéria
+                lbl_materia = ctk.CTkLabel(
+                    master=frame_tabela,
+                    text=materia,
+                    font=("Arial", 12),
+                    width=180,
+                    height=40,
+                    corner_radius=5,
+                    fg_color=bg_color,
+                    anchor="w"
+                )
+                lbl_materia.grid(row=row, column=0, padx=5, pady=2, sticky="nsew")
+                
+                # Campos de nota
+                for col in range(len(unidades)):
+                    frame_nota = ctk.CTkFrame(
+                        master=frame_tabela,
+                        width=200,
+                        height=40,
+                        fg_color=bg_color,
+                        corner_radius=5
+                    )
+                    frame_nota.grid(row=row, column=col+1, padx=5, pady=2, sticky="nsew")
+                    
+                    entry_nota = ctk.CTkEntry(
+                        master=frame_nota,
+                        width=180,
+                        height=30,
+                        font=("Arial", 12),
+                        placeholder_text="0.0",
+                        justify="center"
+                    )
+                    entry_nota.place(relx=0.5, rely=0.5, anchor="center")
+        
+        def mudar_ensino(escolha):
+            nonlocal materias_atuais
+            
+            # Atualiza turmas 
+            if escolha == "INTEGRAL":
+                selecao_turma.configure(values=turmas_integral)
+                selecao_turma.set(turmas_integral[0])
+            else:
+                selecao_turma.configure(values=turmas)
+                selecao_turma.set(turmas[0])
+            
+            # Atualiza matérias 
+            if escolha == "INFORMÁTICA":
+                materias_atuais = materias_info
+            elif escolha == "NUTRIÇÃO":
+                materias_atuais = materias_nutri
+            elif escolha == "ADMINISTRAÇÃO":
+                materias_atuais = materias_adm
+            elif escolha == "INTEGRAL":
+                materias_atuais = materias_integral
+            
+            criar_tabela()
 
+        selecao_ensino.configure(command=mudar_ensino)
+        
+        # Botões 
+        btn_salvar = ctk.CTkButton(
+            master=frame_conteudo,
+            text="SALVAR BOLETIM",
+            width=150,
+            height=35,
+            fg_color=COLOR_SECONDARY,
+            hover_color=COLOR_HOVER,
+            font=("Arial", 14, "bold"),
+            corner_radius=8
+        )
+        btn_salvar.place(x=790, y=660)
+
+        btn_imprimir = ctk.CTkButton(
+            master=frame_conteudo,
+            text="IMPRIMIR BOLETIM",
+            width=150,
+            height=35,
+            fg_color=COLOR_SECONDARY,
+            hover_color=COLOR_HOVER,
+            font=("Arial", 14, "bold"),
+            corner_radius=8
+        )
+        btn_imprimir.place(x=590, y=660)
+        
+        # Cria tabela inicial
+        criar_tabela()
+    
     def tela_cardapio():
         limparTela()
-        ctk.CTkLabel(master=frame_conteudo, text="Cardápio da Semana", font=("Arial", 18)).place(x=60,y=10)
+        ctk.CTkLabel(master=frame_conteudo, text="CARDÁPIO DA SEMANA", font=("Arial", 18)).place(x=60,y=10)
 
-        frame_dados = ctk.CTkFrame(master=frame_conteudo, fg_color="red", width=900, height=500)
-        frame_dados.place(x=40, y=120)
+        frame_dados = ctk.CTkFrame(master=frame_conteudo, border_color="#e1e1e1",border_width=1, fg_color="white", width=900, height=500)
 
     # Cabeçalho do menu
     label_titulo = ctk.CTkLabel(
@@ -387,7 +618,7 @@ def sistema():
 
     btn4 = ctk.CTkButton(
         **btn_style,
-        text="CARDAPIO DA SEMANA",
+        text="CARDÁPIO DA SEMANA",
         command=tela_cardapio
     )
     btn4.place(x=0, y=285)
