@@ -46,13 +46,29 @@ venom.create({ session: 'bot-escola' })
             delete dadosTemporarios[telefone];
             return;
           }
+        
+        }
+
+        if(dadosTemporarios[telefone].opcao === "transferir"){
+          if (!dadosTemporarios[telefone].nome) {
+            dadosTemporarios[telefone].nome = message.body;
+            await client.sendText(telefone, "Informe turma");
+            return;
+            
+          } else {
+            dadosTemporarios[telefone].serie = message.body;
+            console.log(dadosTemporarios[telefone]);
+            await client.sendText(telefone, `${dadosTemporarios[telefone].nome.split(' ')[0]} vamos redirecionar você ao setor responsável `);
+            delete dadosTemporarios[telefone];
+            return;
+          }
         }
       }
 
       // Menu principal com switch
       switch(msg) {
         case 'menu':
-          await client.sendText(telefone, '📋 MENU:\n1. Solicitar Documento\n2. Solicitar Horários\n3. Solicitar Cardápio');
+          await client.sendText(telefone, '📋 MENU:\n1. Solicitar Documento(Comprovante de Matricula, Atestado de frequência e etc..)\n2. Solicitar Horários\n3. Solicitar Cardápio\n4. O que eu preciso para mudar de turma ou de turno?\n5. tem reforço ou aula extra para quem está com dificuldade?\n6. O uniforme é obrigatório todos os dias? E se eu esquecer?\n7. Solicitar Boletim\n8. Vou mudar de cidade, como transfiro minha matrícula?');
           break;
 
         case '1':
@@ -68,9 +84,30 @@ venom.create({ session: 'bot-escola' })
         case '3':
           //enviar o cardapio usando json e banco de dados
           break;
+        
+        case '4':
+          dadosTemporarios[telefone] = { opcao: "trocar_turma" };
+          break;
+        
+        case '5':
+          await client.sendText(telefone, "Sim-sugerir msterias, vídeo-aulas.");
+          break;
+
+        case '6':
+          await client.sendText(telefone, "Sim, deverá justificar ao responsável ");
+          break;
+
+        case '7':
+          await client.sendText(telefone, "Sim, deverá justificar ao responsável ");
+          break;
+
+        case '8':
+          dadosTemporarios[telefone] = { opcao: "transferir" };
+          await client.sendText(telefone, "Informe seu nome completo");
+          break;
 
         default:
-          await client.sendText(telefone, `Olá, eu sou o bot da Escola e estou aqui para te ajudar, digite "menu" para ver as opções.`);
+          await client.sendText(telefone, `Olá, eu sou o bot da Escola e estou aqui para ajudar os alunos, digite "menu" para ver as opções.`);
       }
     });
   })
