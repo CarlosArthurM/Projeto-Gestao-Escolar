@@ -141,7 +141,7 @@ def sistema():
     )
     frame_conteudo.place(x=250, y=0,relwidth=1, relheight=1)
 
-    msgEntrada =ctk.CTkLabel(master=frame_conteudo, text="OLÁ ADMIN", font=("Arial",20, "bold"))
+    msgEntrada =ctk.CTkLabel(master=frame_conteudo, text="BEM VINDO ADMIN", font=("Arial",20, "bold"))
     msgEntrada.place(x=450, y=250)
     
     def limparTela():
@@ -340,41 +340,9 @@ def sistema():
         )
         btn_salvar.place(x=790, y=660)
 
-        btn_visualizar = ctk.CTkButton(
-            master=frame_conteudo,
-            text="VISUALIZAR HORÁRIOS",
-            width=150,
-            height=35,
-            fg_color=COLOR_SECONDARY,
-            hover_color=COLOR_HOVER,
-            font=("Arial", 12, "bold"),
-            corner_radius=8,
-            command=lambda: mostrar_horarios() + voltarTabela()
-        )
-        btn_visualizar.place(x=620, y=660)
-
-        def voltarTabela():
-            btn_voltar = ctk.CTkButton(
-            master=frame_conteudo,
-            text="VOLTAR",
-            width=150,
-            height=35,
-            fg_color=COLOR_SECONDARY,
-            hover_color=COLOR_HOVER,
-            font=("Arial", 12, "bold"),
-            corner_radius=8,
-            command=lambda: criar_tabela(horarios_padrao) + btn_voltar.destroy() 
-        )
-            btn_voltar.place(x=450, y=660)
-        
         def salvar_horario():
             # salvar no banco de dados
             messagebox.showinfo("Sucesso", "Horário salvo com sucesso!")
-            
-        def mostrar_horarios():
-            # Limpa o frame de tabela
-            for widget in frame_tabela.winfo_children():
-                widget.destroy()
 
 
     def tela_registrar_boletins():

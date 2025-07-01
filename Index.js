@@ -107,7 +107,7 @@ venom.create({ session: 'bot-escola' })
           break;
 
         default:
-          await client.sendText(telefone, `Olá, eu sou o bot da Escola e estou aqui para ajudar os alunos, digite "menu" para ver as opções.`);
+          await client.sendText(telefone, `Olá, eu sou o bot da Escola e estou aqui para ajudar você, digite "menu" para ver as opções.`);
       }
     });
   })
