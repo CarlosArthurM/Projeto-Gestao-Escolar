@@ -119,7 +119,7 @@ def sistema():
     main_window = ctk.CTk()
     ctk.set_appearance_mode("light")
     main_window.title("Sistema Escolar")
-    main_window.attributes("-fullscreen", True)
+    main_window.state("zoomed")
     main_window.resizable(False, False)
 
     # Menu lateral
@@ -130,7 +130,6 @@ def sistema():
     )
     menu.place(x=0, y=0, relwidth=0.25 , relheight=1)
 
-
     frame_conteudo = ctk.CTkFrame(
         master=main_window,
         width=1030,
@@ -140,7 +139,7 @@ def sistema():
     frame_conteudo.place(x=250, y=0,relwidth=1, relheight=1)
 
     msgEntrada =ctk.CTkLabel(master=frame_conteudo, text="BEM VINDO ADMIN", font=("Arial",20, "bold"))
-    msgEntrada.place(x=450, y=250)
+    msgEntrada.place(relx=0.4, rely=0.45)
     
     def limparTela():
         for widget in frame_conteudo.winfo_children():
@@ -155,12 +154,9 @@ def sistema():
             master=frame_conteudo,
             fg_color="white",
             border_width=1,
-            border_color="#e1e1e1",
-            width=920,
-            height=500
+            border_color="#e1e1e1"
         )
-        frame_pedidos.place(x=40, y=150)
-        # Adicione mais widgets aqui
+        frame_pedidos.place(relx=0.002, rely=0.2, relwidth = 0.85, relheight= 0.75)
 
     def tela_registrar_horarios():
         limparTela()
@@ -191,7 +187,7 @@ def sistema():
         selecao_ensino = ctk.CTkComboBox(
             master=frame_selecoes,
             values=cursos,
-            font=("Arial", 12),
+            font=("Arial", 14, "bold"),
             width=140,
             state="readonly"
         )
@@ -202,7 +198,7 @@ def sistema():
         selecao_turma = ctk.CTkComboBox(
             master=frame_selecoes,
             values=turmas,
-            font=("Arial", 12),
+            font=("Arial", 14, "bold"),
             width=140,
             state="readonly"
         )
@@ -213,7 +209,7 @@ def sistema():
         selecao_serie = ctk.CTkComboBox(
             master=frame_selecoes,
             values=series,
-            font=("Arial", 12),
+            font=("Arial", 14, "bold"),
             width=140,
             state="readonly"
         )
@@ -232,7 +228,7 @@ def sistema():
             border_width=1,
             border_color="#e1e1e1"
         )
-        frame_tabela.place(relx=0.15, rely=0.25, relwidth=0.6, relheight=0.6)
+        frame_tabela.place(relx=0.15, rely=0.25, relwidth=0.55, relheight=0.6)
 
         def criar_tabela(horarios):
             # Limpa o frame da tabela
@@ -263,8 +259,8 @@ def sistema():
                 # Label do horário
                 lbl_horario = ctk.CTkLabel(
                     master=frame_tabela,
-                    text=f"{horario}º Horário",
-                    font=("Arial", 12, "bold"),
+                    text=f"{horario} Horário",
+                    font=("Arial", 14, "bold"),
                     width=110,
                     height=altura_linha-10,
                     corner_radius=5,
@@ -320,6 +316,10 @@ def sistema():
 
         selecao_ensino.configure(command=mudar_ensino)
 
+        def salvar_horario():
+            # salvar no banco de dados
+            messagebox.showinfo("Sucesso", "Horários salvo com sucesso!")
+
         # Botão para salvar 
         btn_salvar = ctk.CTkButton(
             master=frame_conteudo,
@@ -328,15 +328,11 @@ def sistema():
             height=35,
             fg_color=COLOR_SECONDARY,
             hover_color=COLOR_HOVER,
-            font=("Arial", 12, "bold"),
+            font=("Arial", 14, "bold"),
             corner_radius=8,
-            command=lambda: salvar_horario()
+            command=salvar_horario
         )
-        btn_salvar.place(relx=0.65, rely=0.85)
-
-        def salvar_horario():
-            # salvar no banco de dados
-            messagebox.showinfo("Sucesso", "Horários salvo com sucesso!")
+        btn_salvar.place(relx=0.62, rely=0.86)
 
 
     def tela_registrar_boletins():
@@ -381,8 +377,7 @@ def sistema():
         )
         frame_selecoes.place(relx=0.15, rely=0.1, relwidth=0.5, relheight=0.1)
         
-        # Campo Nome do Aluno 
-
+        # Campo Nome do Aluno
         ctk.CTkLabel( master=frame_selecoes, text="NOME DO ALUNO:", font=("Arial", 14, "bold")).place(relx=0.03, rely=0.2)
 
         entry_nome = ctk.CTkEntry(
@@ -394,7 +389,9 @@ def sistema():
         )
         entry_nome.place(x=30, y=45)
         
-        ctk.CTkLabel(master=frame_selecoes, text="CURSO:", font=("Arial", 14, "bold")).place(relx=0.37, rely=0.2)    
+        # Campo curso
+        ctk.CTkLabel(master=frame_selecoes, text="CURSO:", font=("Arial", 14, "bold")).place(relx=0.37, rely=0.2) 
+
         selecao_ensino = ctk.CTkComboBox(
             master=frame_selecoes,
             values=cursos,
@@ -406,7 +403,9 @@ def sistema():
         selecao_ensino.place(x=350, y=45)
         selecao_ensino.set(cursos[0])
 
+        # Campo turma
         ctk.CTkLabel(master=frame_selecoes, text="TURMA:", font=("Arial", 14, "bold")).place(relx=0.57, rely=0.2)
+        
         selecao_turma = ctk.CTkComboBox(
             master=frame_selecoes,
             values=turmas,
@@ -417,7 +416,9 @@ def sistema():
         selecao_turma.place(x=550, y=45)
         selecao_turma.set(turmas[0])
 
+        # Campo serie
         ctk.CTkLabel(master=frame_selecoes, text="SÉRIE:", font=("Arial", 14, "bold")).place(relx=0.73, rely=0.2)
+        
         selecao_serie = ctk.CTkComboBox(
             master=frame_selecoes,
             values=series,
@@ -434,7 +435,7 @@ def sistema():
             fg_color="white",
             border_width=1,
             border_color="#e1e1e1",
-            width=900,
+            width=840,
             height=450,
             corner_radius=10
         )
@@ -535,7 +536,7 @@ def sistema():
             font=("Arial", 14, "bold"),
             corner_radius=8
         )
-        btn_salvar.place(relx=0.45, rely=0.69)
+        btn_salvar.place(relx=0.44, rely=0.72)
 
         btn_imprimir = ctk.CTkButton(
             master=frame_conteudo,
@@ -547,17 +548,21 @@ def sistema():
             font=("Arial", 14, "bold"),
             corner_radius=8
         )
-        btn_imprimir.place(relx=0.53, rely=0.69)
+        btn_imprimir.place(relx=0.52, rely=0.72)
         
         # Cria tabela inicial
         criar_tabela()
     
     def tela_registrar_cardapio():
         limparTela()
-        ctk.CTkLabel(master=frame_conteudo, text="REGISTRAR CARDÁPIO", font=("Arial", 20,"bold")).place(x=60,y=10)
+        
+        ctk.CTkLabel(
+            master=frame_conteudo, 
+            text="REGISTRAR CARDÁPIO", 
+            font=("Arial", 20,"bold")
+        ).place(x=60, y=10)
 
-
-        # Frame para tabela 
+        # Frame para a tabela
         frame_tabela = ctk.CTkFrame(
             master=frame_conteudo,
             fg_color="white",
@@ -568,25 +573,38 @@ def sistema():
         )
         frame_tabela.place(relx=0.15, rely=0.25)
 
+        refeicoes = []
+
         def criar_tabela():
             for widget in frame_tabela.winfo_children():
                 widget.destroy()
             
             dias_semana = ["SEGUNDA-FEIRA", "TERÇA-FEIRA", "QUARTA-FEIRA","QUINTA-FEIRA","SEXTA-FEIRA"]
-            horarios = ["CAFÉ", "MERENDA" ,"ALMOÇO", "MERENDA"]
+            horarios = ["6:30", "9:20", "12:20", "14:30"]
             # Cabeçalho 
+
+            ctk.CTkLabel(
+                master=frame_tabela, 
+                text="HORÁRIOS", 
+                font=("Arial", 14, "bold"),
+                width=140,
+                height=40,
+                corner_radius=5,
+                fg_color=COLOR_SECONDARY,
+                text_color="white").grid(row=0, column=0, padx=15, pady=10)
+
             for col, dia in enumerate(dias_semana):
                 header = ctk.CTkLabel(
                     master=frame_tabela,
                     text=dia,
-                    font=("Arial", 12, "bold"),
+                    font=("Arial", 14, "bold"),
                     width=140,
                     height=40,
                     corner_radius=5,
                     fg_color=COLOR_SECONDARY,
                     text_color="white"
                 )
-                header.grid(row=0, column=col+1, padx=5, pady=10, sticky="nsew")
+                header.grid(row=0, column=col+1, padx=5, pady=10)
             
             # Linhas de horários
             for row, horario in enumerate(horarios, start=1):
@@ -596,18 +614,17 @@ def sistema():
                 lbl_horario = ctk.CTkLabel(
                     master=frame_tabela,
                     text=horario,
-                    font=("Arial", 12),
+                    font=("Arial", 14, "bold"),
                     width=150,
                     height=40,
                     corner_radius=5,
                     fg_color=bg_color,
-                    anchor="w"
                 )
-                lbl_horario.grid(row=row, column=0, padx=5, pady=5, sticky="nsew")
-                
+                lbl_horario.grid(row=row, column=0, padx=5, pady=5)
+
+                linha_entries = []
                 # Campos de entrada para cada dia
                 for col in range(len(dias_semana)):
-                    
                     entry = ctk.CTkEntry(
                         master=frame_tabela,
                         width=140,
@@ -618,12 +635,20 @@ def sistema():
                         border_width=1,
                         border_color="#dddddd"
                     )
-                    entry.grid(row=row, column=col+1, padx=5, pady=5, sticky="nsew")
-                    
-            
-        criar_tabela()
+                    entry.grid(row=row, column=col+1, padx=5, pady=5)
+                    linha_entries.append(entry)
+                    refeicoes.append(linha_entries)
 
-        # Botão para salvar 
+        criar_tabela()  # Gera a tabela na tela
+
+        def salvar_dados_cardapio():
+            import sqlite3
+
+            connect = sqlite3.connect('Banco_sistema.db')
+            messagebox.showinfo("Sucesso","Cardapio salvo com sucesso!!")
+            
+
+        # Botão pra salvar os dados
         btn_salvar = ctk.CTkButton(
             master=frame_conteudo,
             text="SALVAR HORÁRIOS",
@@ -631,10 +656,12 @@ def sistema():
             height=35,
             fg_color=COLOR_SECONDARY,
             hover_color=COLOR_HOVER,
-            font=("Arial", 12, "bold"),
-            corner_radius=8
+            font=("Arial", 14, "bold"),
+            corner_radius=8,
+            command=salvar_dados_cardapio
         )
-        btn_salvar.place(x=790, y=660)
+        btn_salvar.place(relx=0.55, rely=0.52)
+
 
     # Cabeçalho do menu
     label_titulo = ctk.CTkLabel(
@@ -707,8 +734,7 @@ def sistema():
     btn5.place(relx=0, rely=0.92, relwidth=0.52, relheight=0.08)
 
 
-
-
     main_window.mainloop()
+
 
 janela_login()
